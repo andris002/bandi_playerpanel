@@ -2,6 +2,7 @@
 ## Features
 - Offline/Online Player ban with discord ID
 <img width="406" height="770" alt="image" src="https://github.com/user-attachments/assets/f72d10e9-cd05-4be7-80b7-7f924986895b" />
+- 
 - Player Kick
 - Player Kill
 - Player Heal
