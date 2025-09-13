@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="panel" v-show="opened">
+            <div class="cont">
+                <div class="search">
+                    <div>
+                        <input type="text" v-model="search">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <i class="bi" :class="onlyonline ? 'bi-person-check' : 'bi-person'" @click="onlyonline = !onlyonline"></i>
+                </div>
+                <div class="members">
+                    <div v-for="(item, index) in Search" :key="index" :style="item.ban ? 'filter: opacity(0.2);' : 'filter: opacity(1);'">
+                        <div class="main">
+                            <img :src="item.dc?.url">
+                            {{item.dc?.name}} <span v-if="item.ban">- Banned</span>
+                        </div>
+                        <div class="icons">
+                            <i class="bi bi-shield-x" v-if="item.ban" @click="UB(item.identifier)"></i>
+                            <i class="bi bi-person-slash" v-if="!item.ban" @click="SetSecondCon('ban'); selectedmem.identifier = item.identifier"></i>
+                            <i class="bi bi-person-dash" v-if="item.online" @click="SetSecondCon('kick'); selectedmem.identifier = item.identifier"></i>
+                            <i class="fa-solid fa-skull-crossbones" v-if="item.online" @click="Kill(item.identifier)"></i>
+                            <i class="bi bi-capsule" v-if="item.online" @click="Heal(item.identifier)"></i>
+                            <i :class="selectedmem.identifier !== item.identifier ? 'bi-chevron-right' : 'bi-chevron-left'" class="bi " @click="if(selectedmem.identifier !== item.identifier){SetSecondCon('info'); selectedmem = item} else{OpenSecond(false); selectedmem = {} } "></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="secondpanel" v-show="secondshowed">
+            <div v-if="secondcon === 'info'">
+                <h1>Player Informations</h1>
+                <hr>
+                <div v-if="selectedmem?.ban"><label>Ban Reason:</label> <span>{{ Cut(selectedmem?.ban) }}</span> <i class="bi" :class="!copied.ban ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('ban')"></i></div>
+                <div><label>Identifier:</label> <span>{{ Cut(selectedmem?.identifier) }}</span> <i class="bi" :class="!copied.identifier ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('identifier')"></i></div>
+                <div><label>Accounts:</label> <span>{{ Cut(selectedmem?.accounts) }}</span> <i class="bi" :class="!copied.accounts ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('accounts')"></i></div>
+                <div><label>Group:</label> <span>{{ Cut(selectedmem?.group) }}</span> </div>
+                <div><label>Inventory:</label> <span>{{ Cut(selectedmem?.inventory) }}</span> <i class="bi" :class="!copied.inventory ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('inventory')"></i></div>
+                <div><label>Job name:</label> <span>{{ Cut(selectedmem?.job) }}</span> <i class="bi" :class="!copied.job ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('job')"></i></div>
+                <div><label>Job Grade:</label> <span>{{ Cut(selectedmem?.job_grade) }}</span> </div>
+                <div><label>Loadout:</label> <span>{{ Cut(selectedmem?.loadout) }}</span> <i class="bi" :class="!copied.loadout ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('loadout')"></i></div>
+                <div><label>Metadata:</label> <span>{{ Cut(selectedmem?.metadata) }}</span> <i class="bi" :class="!copied.metadata ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('metadata')"></i></div>
+                <div><label>Position:</label> <span>{{ Cut(selectedmem?.position) }}</span> <i class="bi" :class="!copied.position ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('position')"></i></div>
+                <div><label>First Name:</label> <span>{{ Cut(selectedmem?.firstname) }}</span> </div>
+                <div><label>Last Name:</label> <span>{{ Cut(selectedmem?.lastname) }}</span> </div>
+                <div><label>Date of birth:</label> <span>{{ Cut(selectedmem?.dateofbirth) }}</span> <i class="bi" :class="!copied.dateofbirth ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('dateofbirth')"></i></div>
+                <div><label>Sex:</label> <span>{{ Cut(selectedmem?.sex) }}</span> </div>
+                <div><label>Height:</label> <span>{{ Cut(selectedmem?.height) }}</span> </div>
+                <div><label>Skin:</label> <span>{{ Cut(selectedmem?.skin) }}</span> <i class="bi" :class="!copied.skin ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('skin')"></i></div>
+                <div><label>Status:</label> <span>{{ Cut(selectedmem?.status) }}</span> <i class="bi" :class="!copied.status ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('status')"></i></div>
+                <div><label>Is dead:</label> <span>{{ Cut(selectedmem?.is_dead) }}</span></div>
+                <div><label>Created At:</label> <span>{{ Cut(selectedmem?.created_at) }}</span> <i class="bi" :class="!copied.created_at ? 'bi-clipboard' : 'bi-clipboard-check'" @click="ClipBoard('created_at')"></i></div>
+            </div>
+            <div v-else-if="secondcon === 'kick'">
+                <h1>Kick Player</h1>
+                <hr>
+                <div><label>Reason:</label> <input type="text" id="kickR" placeholder="Enter Reason..."></div>
+                <button @click="Kick()">Kick</button>
+            </div>
+            <div v-else-if="secondcon === 'ban'">
+                <h1>Ban Player</h1>
+                <hr>
+                <div><label>Reason:</label> <input type="text" id="banR" placeholder="Enter Reason..."></div>
+                <button @click="Ban()">Ban</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

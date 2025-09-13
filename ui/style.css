@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: poppins;
+    user-select: none;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+:root{
+--lightgray: #747373;
+--lightergray: #a7a4a4;
+--text-color: #ffffff;
+--darkgray: #333333;
+--darkergray: #222222;
+--primary: #ff5722;
+--primaryhover: #a73817;
+--redColor: #ad1a10;
+--greenColor: #2a9714;
+}
+
+::-webkit-scrollbar{
+    width: 8px;
+}::-webkit-scrollbar-thumb{
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+
+@keyframes megnyit {from{opacity: 0} to{opacity: 1}}
+@keyframes bezar {from{opacity: 1} to{opacity: 0}}
+
+@keyframes secondmegnyit {from{left: 100%;} to{left: 62%;}}
+@keyframes secondbezar {from{left: 62%;} to{left: 100%;}}
+
+.panel{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 20%;
+    height: 70%;
+    background-color: var(--darkergray);
+    border-radius: 10px;
+    opacity: 0;
+}
+
+.cont{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}.cont .members{
+    height: 80%;
+    width: 90%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}.cont .search{
+    height: 5%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}.search div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 80%;
+}.search > i{
+    font-size: 20px;
+    color: var(--primary);
+    cursor: pointer;
+}.search div i{
+    margin-left: -25px;
+    color: var(--primary);
+    background-color: var(--darkgray);
+}.search div input{
+    width: 80%;
+    border-radius: 5px;
+    background-color: var(--darkgray);
+    border: 1px solid var(--primary);
+    padding: 10px;
+    color: var(--text-color);
+}.search div input:focus{
+    outline: none;
+    border-color: var(--primaryhover);
+}
+
+.members > div{
+    width: 80%;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: var(--darkgray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+}.members > div .main, .members > div .icons{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}.members > div .main img{
+    max-width: 50px;
+    border-radius: 50%;
+}.icons i{
+    cursor: pointer;
+    color: var(--primary);
+}.icons i:hover{
+    color: var(--primaryhover);
+}
+
+.secondpanel{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 100%;
+    height: 60%;
+    width: 20%;
+    background-color: var(--darkergray);
+    border-radius: 10px;
+}.secondpanel > div{
+    width: 100%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding: 10px;
+}.secondpanel > div h1{
+    font-size: 25px;
+    color: var(--primary);
+    font-weight: bold;
+}.secondpanel > div hr{
+    width: 80%;
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+}.secondpanel > div > div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 60%;
+}.secondpanel > div > div label{
+    background-color: var(--darkgray);
+    padding: 5px;
+    color: var(--text-color);
+    border-radius: 5px;
+}.secondpanel > div > div span{
+    color: var(--text-color);
+}.secondpanel > div > div i{
+    color: var(--primary);
+    cursor: pointer;
+}.secondpanel > div > div i:hover{
+    color: var(--primaryhover);
+}.secondpanel > div > div input{
+    background-color: var(--darkgray);
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--text-color);
+}.secondpanel > div > div input:focus{
+    border-color: var(--primaryhover);
+    outline: none;
+}.secondpanel > div > button{
+    background-color: var(--primary);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}.secondpanel > div > button:hover{
+    background-color: var(--primaryhover);
+    
+}
